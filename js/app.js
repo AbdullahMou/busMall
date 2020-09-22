@@ -5,9 +5,9 @@ var mIEle = document.getElementById('mIEle');
 var rIEle = document.getElementById('rIEle');
 var imgD = document.getElementById('imgD');
 var resUL = document.getElementById('resUL');
-var drImg;
-var dlImg;
-var dmImg;
+var rImg = -1;
+var lImg = -1;
+var mImg = -1;
 let cleckTimes = 0;
 let cleckR;
 let cleckL;
@@ -50,10 +50,6 @@ var wine = new Item('wine', 'img/wine-glass.jpg');
 // var currentLeftImage;
 // var currentMidImage;
 // var currentRightImage;
-var rImg;
-var lImg;
-var mImg;
-
 function getRandom() {
 
     var cuimg = [rImg, lImg, mImg];
@@ -74,13 +70,14 @@ function getRandom() {
     // currentLeftImage = allItem[leftIndex];
     // currentMidImage = allItem[midIndex];
     // currentRightImage = allItem[rightIndex];
+    // var r = cuimg.includes(rImg);
 
     while (lImg === rImg || rImg === mImg || lImg === mImg || cuimg.includes(rImg) || cuimg.includes(lImg) || cuimg.includes(mImg)) {
         //console.log(cuimg);
         rImg = Math.floor((Math.random() * allItem.length));
         lImg = Math.floor((Math.random() * allItem.length));
-        lImg = Math.floor((Math.random() * allItem.length));
-        console.log(cuimg);
+        mImg = Math.floor((Math.random() * allItem.length));
+        console.log(mImg, lImg, rImg);
     }
     // cuimg.push(rImg, lImg, mImg);
     //  console.log(cuimg);
@@ -122,39 +119,102 @@ function voit(event) {
         cleckM.election++
             getRandom();
         cleckTimes++;
-        console.log(event)
+        //console.log(event)
     }
     if (cleckTimes == 25) {
         imgD.removeEventListener('click', voit);
         for (let i = 0; i < allItem.length; i++) {
-            var li = document.createElement('li')
-            li.textContent = (allItem[i].name + ' Slicer had ' + allItem[i].election + ' votes and was shown ' + allItem[i].shownTimes + ' times')
-            resUL.appendChild(li)
+            var li = document.createElement('li');
+            li.textContent = (allItem[i].name + ' Slice had ' + allItem[i].election + ' votes and was shown ' + allItem[i].shownTimes + ' times');
+            resUL.appendChild(li);
+
         }
+        chart();
     }
 }
 //console.log(allItem);
-var labels;
+var allName = [];
+var allElection = [];
+var allShownTimes = [];
 
-var ctx = document.getElementById('myChart').getContext('2d');
+function chart() {
+    for (let i = 0; i < allItem.length; i++) {
 
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'pie',
+        allName.push(allItem[i].name);
+        allElection.push(allItem[i].election)
+        allShownTimes.push(allItem[i].shownTimes)
+        console.log(allElection, allName);
+    }
+    var labels;
 
-    // The data for our dataset
-    data: {
-        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [22, 3, 44, 1, 4, 22, 5, 66, 2, 33]
-        }]
-    },
-    // Configuration options go here
-    options: {}
+    var ctx = document.getElementById('myChart').getContext('2d');
 
-});
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'pie',
+
+        // The data for our dataset
+        data: {
+            labels: allName, //['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: ['rgb(255, 99, 132)',
+                        'rgb(83, 133, 249)',
+                        'rgb(192, 133, 84)',
+                        'rgb(219, 196, 84)',
+                        'rgb(219, 196, 42)',
+                        'rgb(174, 157, 205)',
+                        'rgb(244, 157, 205)',
+                        'rgb(244, 143, 163)',
+                        'rgb(103, 78, 230))',
+                        'rgb(50, 52, 163)',
+                        'rgb(255, 99, 132)',
+                        'rgb(83, 133, 249)',
+                        'rgb(192, 133, 84)',
+                        'rgb(219, 196, 84)',
+                        'rgb(219, 196, 42)',
+                        'rgb(174, 157, 205)',
+                        'rgb(244, 157, 205)',
+                        'rgb(244, 143, 163)',
+                        'rgb(103, 78, 230))',
+                        'rgb(50, 52, 163)'
+                    ],
+                    borderColor: 'rgb(0, 0, 0)',
+                    data: allElection //[5, 1, 15, 12, 2, 3, 5]
+                },
+
+                {
+                    label: 'My First dataset',
+                    backgroundColor: ['rgb(244, 157, 205)',
+                        'rgb(244, 143, 163)',
+                        'rgb(103, 78, 230))',
+                        'rgb(50, 52, 163)',
+                        'rgb(255, 99, 132)',
+                        'rgb(83, 133, 249)',
+                        'rgb(192, 133, 84)',
+                        'rgb(219, 196, 84)',
+                        'rgb(219, 196, 42)',
+                        'rgb(174, 157, 205)',
+                        'rgb(244, 157, 205)',
+                        'rgb(244, 143, 163)',
+                        'rgb(103, 78, 230))',
+                        'rgb(50, 52, 163)',
+                        'rgb(255, 99, 132)',
+                        'rgb(83, 133, 249)',
+                        'rgb(192, 133, 84)',
+                        'rgb(219, 196, 84)',
+                        'rgb(219, 196, 42)',
+                        'rgb(174, 157, 205)'
+                    ],
+                    borderColor: 'rgb(255, 255, 255)',
+                    data: allShownTimes // [5, 1, 15, 12, 2, 3, 5]
+                }
+            ]
+        },
+        // Configuration options go here
+        options: {}
+
+    });
+}
 // chart.config.data.labels.datasets = ;
 // console.log(labels);
