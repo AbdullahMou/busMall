@@ -5,16 +5,16 @@ body {
 }
 
 #resD {
+    color: rgb(107, 9, 153);
     border: 3px dashed red;
     text-align: center;
     background-color: rgb(201, 241, 89);
 }
 
-#imgD {}
-
 img {
     margin: 1%;
     width: 28%;
+    height: 400px;
     border: 3px double fuchsia;
     border-width: 6px;
     border-radius: 5%;
