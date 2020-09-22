@@ -1,0 +1,21 @@
+body {
+    background-image: url(uu.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#resD {
+    border: 3px dashed red;
+    text-align: center;
+    background-color: rgb(201, 241, 89);
+}
+
+#imgD {}
+
+img {
+    margin: 1%;
+    width: 28%;
+    border: 3px double fuchsia;
+    border-width: 6px;
+    border-radius: 5%;
+}
