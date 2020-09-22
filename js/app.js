@@ -12,6 +12,7 @@ let cleckTimes = 0;
 let cleckR;
 let cleckL;
 let cleckM;
+chart();
 
 function Item(name, src) {
     this.name = name;
@@ -20,10 +21,16 @@ function Item(name, src) {
     this.random = [];
     this.shownTimes = 0;
 
-    allItem.push(this)
-        // labels.push(this.name)
+    allItem.push(this);
+
+    // Item.all.push(this);
+
 
 };
+// if (localStorage.getItem(allProduct))
+
+// Items.all = [];
+
 var bag = new Item('bag', 'img/bag.jpg');
 var banana = new Item('banana', 'img/banana.jpg');
 var bathroom = new Item('bathroom', 'img/bathroom.jpg');
@@ -77,7 +84,7 @@ function getRandom() {
         rImg = Math.floor((Math.random() * allItem.length));
         lImg = Math.floor((Math.random() * allItem.length));
         mImg = Math.floor((Math.random() * allItem.length));
-        console.log(mImg, lImg, rImg);
+        // console.log(mImg, lImg, rImg);
     }
     // cuimg.push(rImg, lImg, mImg);
     //  console.log(cuimg);
@@ -100,6 +107,7 @@ function getDisplay(rImg, lImg, mImg) {
     mIEle.setAttribute('width', '200px');
 }
 //console.log(allItem);
+
 getRandom();
 
 imgD.addEventListener('click', voit);
@@ -129,23 +137,33 @@ function voit(event) {
             resUL.appendChild(li);
 
         }
-        chart();
+
+        localStorage.setItem('product', JSON.stringify(allProduct));
+        // console.log(allProduct);
     }
+}
+var allProduct;
+allProduct.push(this.name, this.election, this.shownTimes);
+if (localStorage.getItem('product')) {
+    for (let i = 0; i < allProduct.length; i++) {
+
+        allName.push((allProduct[0])[i]);
+        allElection.push((allProduct[1])[i])
+        allShownTimes.push((allProduct[2])[i])
+        console.log(allElection, allName);
+    }
+    console.log(allProduct[0]);
+} else {
+    allProduct = [];
 }
 //console.log(allItem);
 var allName = [];
 var allElection = [];
 var allShownTimes = [];
 
-function chart() {
-    for (let i = 0; i < allItem.length; i++) {
 
-        allName.push(allItem[i].name);
-        allElection.push(allItem[i].election)
-        allShownTimes.push(allItem[i].shownTimes)
-        console.log(allElection, allName);
-    }
-    var labels;
+
+function chart() {
 
     var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -155,9 +173,9 @@ function chart() {
 
         // The data for our dataset
         data: {
-            labels: allName, //['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: allName,
             datasets: [{
-                    label: 'My First dataset',
+                    label: 'voets times',
                     backgroundColor: ['rgb(255, 99, 132)',
                         'rgb(83, 133, 249)',
                         'rgb(192, 133, 84)',
@@ -180,11 +198,11 @@ function chart() {
                         'rgb(50, 52, 163)'
                     ],
                     borderColor: 'rgb(0, 0, 0)',
-                    data: allElection //[5, 1, 15, 12, 2, 3, 5]
+                    data: allElection
                 },
 
                 {
-                    label: 'My First dataset',
+                    label: 'shown times',
                     backgroundColor: ['rgb(244, 157, 205)',
                         'rgb(244, 143, 163)',
                         'rgb(103, 78, 230))',
@@ -207,13 +225,12 @@ function chart() {
                         'rgb(174, 157, 205)'
                     ],
                     borderColor: 'rgb(255, 255, 255)',
-                    data: allShownTimes // [5, 1, 15, 12, 2, 3, 5]
+                    data: allShownTimes
                 }
             ]
         },
         // Configuration options go here
         options: {}
-
     });
 }
 // chart.config.data.labels.datasets = ;
