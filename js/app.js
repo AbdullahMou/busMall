@@ -31,7 +31,7 @@ function Item(name, src) {
 
 // Items.all = [];
 
-var bag = new Item('bag', 'img/bag.jpg');
+new Item('bag', 'img/bag.jpg');
 var banana = new Item('banana', 'img/banana.jpg');
 var bathroom = new Item('bathroom', 'img/bathroom.jpg');
 var boots = new Item('boots', 'img/boots.jpg');
@@ -57,6 +57,12 @@ var wine = new Item('wine', 'img/wine-glass.jpg');
 // var currentLeftImage;
 // var currentMidImage;
 // var currentRightImage;
+
+if (localStorage.getItem('product')) {
+    allItem = [];
+    allItem = JSON.parse(localStorage.getItem('product'));
+}
+
 function getRandom() {
 
     var cuimg = [rImg, lImg, mImg];
@@ -135,37 +141,37 @@ function voit(event) {
             var li = document.createElement('li');
             li.textContent = (allItem[i].name + ' Slice had ' + allItem[i].election + ' votes and was shown ' + allItem[i].shownTimes + ' times');
             resUL.appendChild(li);
-
+            chart();
         }
 
-        localStorage.setItem('product', JSON.stringify(allProduct));
+        localStorage.setItem('product', JSON.stringify(allItem));
         // console.log(allProduct);
     }
 }
-var allProduct;
-allProduct.push(this.name, this.election, this.shownTimes);
-if (localStorage.getItem('product')) {
-    for (let i = 0; i < allProduct.length; i++) {
 
-        allName.push((allProduct[0])[i]);
-        allElection.push((allProduct[1])[i])
-        allShownTimes.push((allProduct[2])[i])
-        console.log(allElection, allName);
-    }
-    console.log(allProduct[0]);
-} else {
-    allProduct = [];
-}
+// if (localStorage.getItem('product')) {
+//     for (let i = 0; i < .length; i++) {
+
+
+//     }
+
+// } else {
+
+// }
 //console.log(allItem);
-var allName = [];
-var allElection = [];
-var allShownTimes = [];
-
 
 
 function chart() {
 
     var ctx = document.getElementById('myChart').getContext('2d');
+    let names = [];
+    let elections = [];
+    let shownTime = [];
+    for (let i = 0; i < allItem.length; i++) {
+        names.push(allItem[i].name);
+        elections.push(allItem[i].election);
+        shownTime.push(allItem[i].shownTimes);
+    }
 
     var chart = new Chart(ctx, {
         // The type of chart we want to create
@@ -173,7 +179,7 @@ function chart() {
 
         // The data for our dataset
         data: {
-            labels: allName,
+            labels: names,
             datasets: [{
                     label: 'voets times',
                     backgroundColor: ['rgb(255, 99, 132)',
@@ -198,7 +204,7 @@ function chart() {
                         'rgb(50, 52, 163)'
                     ],
                     borderColor: 'rgb(0, 0, 0)',
-                    data: allElection
+                    data: elections //[22, 3, 44, 1, 4, 22, 5, 66, 2, 33]
                 },
 
                 {
@@ -225,7 +231,7 @@ function chart() {
                         'rgb(174, 157, 205)'
                     ],
                     borderColor: 'rgb(255, 255, 255)',
-                    data: allShownTimes
+                    data: shownTime //[22, 3, 44, 1, 4, 22, 5, 66, 2, 33]
                 }
             ]
         },
@@ -234,4 +240,4 @@ function chart() {
     });
 }
 // chart.config.data.labels.datasets = ;
-// console.log(labels);
+console.log(allItem);
